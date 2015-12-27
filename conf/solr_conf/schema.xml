@@ -1,0 +1,94 @@
+<schema name="example" version="1.5">
+    <fields>
+        <field name="_version_" type="long" indexed="true" stored="true" required="true"/>
+        <field name="id" type="string" indexed="true" stored="true" required="true" />
+        <field name="product_name" type="text_ch" indexed="true" stored="true" required="true" />
+        <field name="upc" type="string" indexed="true" stored="true" required="false" />
+        <field name="category_l1" type="string" indexed="true" stored="true" required="true" />
+        <field name="category_l2" type="string" indexed="true" stored="true" required="true" />
+        <field name="category_l3" type="string" indexed="true" stored="true" required="true" />
+        <field name="product_unit" type="string" indexed="true" stored="true" required="true" />
+        <field name="brand" type="string" indexed="true" stored="true" required="true" />
+        <field name="original_country" type="string" indexed="true" stored="true" required="true" />
+        <field name="current_price" type="currency" indexed="true" stored="true" required="true" />
+        <field name="current_stock" type="string" indexed="false" stored="true" required="true" />
+        <field name="image_link" type="string" indexed="false" stored="true" required="true" />
+        <field name="product_description" type="text_ch" indexed="true" stored="true" required="true" />
+
+        <!--dynamic field, mainly for attribute-->
+        <field name="attr_*" type="string" indexed="true" stored="true" />
+
+        <!--none nesserary field-->
+        <field name="vendor_id" type="string" indexed="false" stored="true" />
+        <field name="sale_history_id" type="string" indexed="false" stored="true" />
+        <field name="history_price" type="string" indexed="false" stored="true" />
+        <field name="reviews" type="string" indexed="false" stored="true" multiValued="true"/>
+
+        <!--main searchable field-->
+        <field name="text" type="text_ch" indexed="true" stored="false" multiValued="true"/>
+
+    </fields>
+
+    <uniqueKey>id</uniqueKey>
+    <defaultSearchField>text</defaultSearchField>
+
+    <types>
+        <fieldType name="string" class="solr.StrField" sortMissingLast="true" />
+        <fieldType name="date" class="solr.TrieDateField" precisionStep="0" positionIncrementGap="0"/>
+        <fieldType name="long" class="solr.TrieLongField" precisionStep="0" positionIncrementGap="0"/>
+        <fieldType name="booleans" class="solr.BoolField" omitNorms="true"/>
+        <fieldType name="tdates" class="solr.TrieDateField" precisionStep="6"
+positionIncrementGap="0"/>
+        <fieldType name="tlongs" class="solr.TrieLongField" precisionStep="6"
+positionIncrementGap="0"/>
+        <fieldType name="tdoubles" class="solr.TrieDoubleField" precisionStep="0" positionIncrementGap="0" />
+        <fieldType name="text_en" class="solr.TextField" positionIncrementGap="100">
+
+            <!-- lots of details -->
+            <analyzer>
+                <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+            </analyzer>
+        </fieldType>
+
+
+        <fieldType name="text_ch" class="solr.TextField" positionIncrementGap="100">
+            <analyzer>
+                <!--<tokenizer class="solr.CJKTokenizerFactory"/>-->
+                <tokenizer class="com.chenlb.mmseg4j.solr.MMSegTokenizerFactory" mode="simple" dicPath="/home/zaicheng/Project/Solr/solr-5.3.1/server/solr/quokka/conf" />
+            </analyzer>
+        </fieldType>
+
+        <fieldType name="currency" class="solr.CurrencyField" precisionStep="8" defaultCurrency="AUD" currencyConfig="currency.xml" />
+    </types>
+
+    <!--copy field to text as main search phase-->
+    <copyField source="product_name" dest="text"/>
+    <copyField source="category_l1" dest="text"/>
+    <copyField source="category_l2" dest="text"/>
+    <copyField source="category_l3" dest="text"/>
+    <copyField source="brand" dest="text"/>
+    <copyField source="original_country" dest="text"/>
+    <copyField source="product_description" dest="text"/>
+    <copyField source="attr_*" dest="text"/>
+    <copyField source="reviews*" dest="text"/>
+
+
+    <fieldtype name="textComplex" class="solr.TextField" positionIncrementGap="100">
+        <analyzer>
+            <tokenizer class="com.chenlb.mmseg4j.solr.MMSegTokenizerFactory" mode="complex" dicPath="/home/zaicheng/Project/Solr/solr-5.3.1/server/solr/quokka/conf"/>
+        </analyzer>
+    </fieldtype>
+
+    <fieldtype name="textMaxWord" class="solr.TextField" positionIncrementGap="100">
+        <analyzer>
+            <tokenizer class="com.chenlb.mmseg4j.solr.MMSegTokenizerFactory" mode="max-word" />
+        </analyzer>
+    </fieldtype>
+
+    <fieldtype name="textSimple" class="solr.TextField" positionIncrementGap="100">
+        <analyzer>
+            <tokenizer class="com.chenlb.mmseg4j.solr.MMSegTokenizerFactory" mode="simple" dicPath="/home/zaicheng/Project/Solr/solr-5.3.1/server/solr/quokka/conf" />
+        </analyzer>
+    </fieldtype>
+
+</schema>
