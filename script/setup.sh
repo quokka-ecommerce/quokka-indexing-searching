@@ -23,8 +23,8 @@ ${base_dir}/${solr_name}/bin/solr create -c quokka-search -p 8983
 
 # copy config and lib
 cp -R ${current_dir}/conf/solr_conf/* ${base_dir}/${solr_name}/server/solr/quokka-search/conf/
-cp -R ${current_dir}/lib/* ${base_dir}/${solr_name}/server/lib/
-cp -R ${current_dir}/lib/* ${base_dir}/quokka_solr/${solr_name}/server/solr-webapp/webapp/WEB-INF/lib/
+cp -R ${current_dir}/lib/* ${base_dir}/${solr_name}/server/ex_lib/
+cp -R ${current_dir}/lib/* ${base_dir}/quokka_solr/${solr_name}/server/solr-webapp/webapp/WEB-INF/ex_lib/
 
 
 
