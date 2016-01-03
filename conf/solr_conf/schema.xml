@@ -75,7 +75,8 @@ positionIncrementGap="0"/>
 
     <fieldtype name="textComplex" class="solr.TextField" positionIncrementGap="100">
         <analyzer>
-            <tokenizer class="com.chenlb.mmseg4j.solr.MMSegTokenizerFactory" mode="complex" dicPath="/home/zaicheng/Project/Solr/solr-5.3.1/server/solr/quokka/conf"/>
+            <!--<tokenizer class="com.chenlb.mmseg4j.solr.MMSegTokenizerFactory" mode="complex" dicPath="/home/zaicheng/Project/Solr/solr-5.3.1/server/solr/quokka/conf"/>-->
+            <tokenizer class="com.chenlb.mmseg4j.solr.MMSegTokenizerFactory" mode="complex" />
         </analyzer>
     </fieldtype>
 
@@ -87,7 +88,8 @@ positionIncrementGap="0"/>
 
     <fieldtype name="textSimple" class="solr.TextField" positionIncrementGap="100">
         <analyzer>
-            <tokenizer class="com.chenlb.mmseg4j.solr.MMSegTokenizerFactory" mode="simple" dicPath="/home/zaicheng/Project/Solr/solr-5.3.1/server/solr/quokka/conf" />
+            <!--<tokenizer class="com.chenlb.mmseg4j.solr.MMSegTokenizerFactory" mode="simple" dicPath="/home/zaicheng/Project/Solr/solr-5.3.1/server/solr/quokka/conf" />-->
+            <tokenizer class="com.chenlb.mmseg4j.solr.MMSegTokenizerFactory" mode="simple" />
         </analyzer>
     </fieldtype>
 
