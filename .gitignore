@@ -58,3 +58,6 @@ target/
 
 # Solr instance
 quokka_solr/
+
+# idea
+.idea/
