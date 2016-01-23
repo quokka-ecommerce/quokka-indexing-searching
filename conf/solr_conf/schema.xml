@@ -7,7 +7,8 @@
         <field name="category_l1" type="string" indexed="true" stored="true" required="true" />
         <field name="category_l2" type="string" indexed="true" stored="true" required="true" />
         <field name="category_l3" type="string" indexed="true" stored="true" required="true" />
-        <field name="product_unit" type="string" indexed="true" stored="true" required="true" />
+        <field name="unit_type" type="string" indexed="true" stored="true" required="true" />
+        <field name="unit_number" type="string" indexed="true" stored="true" required="true" />
         <field name="brand" type="string" indexed="true" stored="true" required="true" />
         <field name="original_country" type="string" indexed="true" stored="true" required="true" />
         <field name="current_price" type="currency" indexed="true" stored="true" required="true" />
