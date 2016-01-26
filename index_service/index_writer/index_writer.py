@@ -4,10 +4,11 @@ import sys
 sys.path.append("/home/zaicheng/Project/quokka-dao-python")
 from product.product_accessor import ProductClient
 from index_product_mapper import IndexProductMapper
-from SolrClient import SolrClient
+# from SolrClient import SolrClient
 import json
+import pysolr
 
-SOLR_URL = "http://localhost:8983/solr/"
+SOLR_URL = "http://localhost:8983/solr/quokka-search"
 DELIMITER = ","
 QUOTECHAR = '"'
 
@@ -18,17 +19,13 @@ class IndexWriter(object):
         self._delimiter_reader = DelimitedReader(DELIMITER, QUOTECHAR)
         self._product_db_client = ProductClient()
         self._index_product_mapper = IndexProductMapper()
-        self._client = SolrClient(SOLR_URL)
+        self._client = pysolr.Solr(SOLR_URL, timeout=10)
 
     def _persist_products(self, products):
         self._product_db_client.insert_product_detail_in_batch(products)
 
     def _index_products(self, products):
-        print products[0]
-        msg = json.dumps(products[0])
-        # self._client.index_json("quokka-search", msg)
-        self._solr_client.add_many(products)
-        self._solr_client.commit()
+        self._client.add(products)
 
     def persit_and_index_product(self, csv_file_name, chunk_size=100):
         chunked_products = []
@@ -46,8 +43,8 @@ class IndexWriter(object):
         self._persist_products(chunked_products)
         self._index_products(chunked_index_products)
 
-        products_from_db = self._product_db_client.fetch_all_product()
-        self._index_products(products_from_db)
+        # products_from_db = self._product_db_client.fetch_all_product()
+        # self._index_products(products_from_db)
 
 
 if __name__ == "__main__":
