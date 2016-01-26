@@ -2,6 +2,7 @@
     <fields>
         <field name="_version_" type="long" indexed="true" stored="true" required="true"/>
         <field name="id" type="string" indexed="true" stored="true" required="true" />
+        <field name="sku" type="string" indexed="true" stored="true" required="true" />
         <field name="product_name" type="text_ch" indexed="true" stored="true" required="true" />
         <field name="upc" type="string" indexed="true" stored="true" required="false" />
         <field name="category_l1" type="string" indexed="true" stored="true" required="true" />
