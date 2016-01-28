@@ -8,7 +8,7 @@ from index_product_mapper import IndexProductMapper
 import json
 import pysolr
 
-SOLR_URL = "http://localhost:8983/solr/quokka-search"
+SOLR_URL = "http://52.34.52.245:8983/solr/quokka-search"
 DELIMITER = ","
 QUOTECHAR = '"'
 
@@ -22,7 +22,7 @@ class IndexWriter(object):
         self._client = pysolr.Solr(SOLR_URL, timeout=10)
 
     def _persist_products(self, products):
-        self._product_db_client.insert_product_detail_in_batch(products)
+        self._product_db_client.insert_product_detail_in_batch(products, update=False)
 
     def _index_products(self, products):
         self._client.add(products)
@@ -42,9 +42,6 @@ class IndexWriter(object):
             count += 1
         self._persist_products(chunked_products)
         self._index_products(chunked_index_products)
-
-        # products_from_db = self._product_db_client.fetch_all_product()
-        # self._index_products(products_from_db)
 
 
 if __name__ == "__main__":
